@@ -1,0 +1,67 @@
+#!/bin/sh
+# Copyright 2015 Wojciech A. Koszek <wojciech@koszek.com>
+#
+# Inspired by:
+#
+# https://gist.github.com/davidblewett/53047c4c7757b663c11b
+# http://pentestmonkey.net/blog/ssh-with-no-tty
+#
+# 1st didn't work for me out of the box on MacOSX. I made this script instead to
+# handle both adding all keys and passing the passphrase to an ssh-add.
+#
+
+LPASS=lpass
+
+export DISPLAY=foo	# ssh-add manpage for details
+export SSH_ASKPASS=$0
+
+set -e			# stop on any errors
+
+function usage() {
+	echo "lastpass-ssh [-h|-d]"
+	echo "  -h or --help    print this help screen"
+	echo "  -d or --debug   enter debugging mode"
+	exit 64
+}
+
+for ARG in $@; do
+	case $ARG in
+	-d|--debug)
+		set -x
+		shift
+		;;
+	-h|--help|-help)
+		usage
+		shift
+		;;
+	*)
+		usage
+	;;
+	esac
+done
+
+function lp_add_all() {
+	CONTAINER="Secure Notes\SSH"
+	for KEY_ID in `lpass ls "${CONTAINER}" | grep ^Secure | tr '[]' ' ' | cut -d " " -f 5`
+	do
+		export KEY_ID
+		echo "# adding key ${KEY_ID}"
+
+		# lpass currently doesn't have a way of displaying individual fields from
+		# an "SSH Key" Secure note. So here we grep everything but the final Notes field,
+		# that has the ASCII armor private key with a leading carriage return
+		# setsid is needed to force ssh-add to honor our SSH_ASKPASS.
+		$LPASS show --notes ${KEY_ID} | ssh-add -
+	done
+}
+
+function lp_ask_pass() {
+	P=`$LPASS show --field Passphrase ${KEY_ID}`
+	echo $P </dev/null
+}
+
+if [ -z ${KEY_ID} ]; then
+	lp_add_all $0
+else
+	lp_ask_pass
+fi
