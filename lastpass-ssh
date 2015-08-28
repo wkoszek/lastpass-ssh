@@ -47,10 +47,6 @@ function lp_add_all() {
 		export KEY_ID
 		echo "# adding key ${KEY_ID}"
 
-		# lpass currently doesn't have a way of displaying individual fields from
-		# an "SSH Key" Secure note. So here we grep everything but the final Notes field,
-		# that has the ASCII armor private key with a leading carriage return
-		# setsid is needed to force ssh-add to honor our SSH_ASKPASS.
 		$LPASS show --notes ${KEY_ID} | ssh-add -
 	done
 }
