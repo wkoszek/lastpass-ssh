@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 # Copyright 2015 Wojciech A. Koszek <wojciech@koszek.com>
 #
 # Inspired by:
@@ -8,56 +8,33 @@
 #
 # 1st didn't work for me out of the box on MacOSX. I made this script instead to
 # handle both adding all keys and passing the passphrase to an ssh-add.
-#
 
-LPASS=lpass
+G_KEYS_PATH = "/w/c/dot.ssh/"
+fn_abs = File.absolute_path($0)
 
-export DISPLAY=foo	# ssh-add manpage for details
-export SSH_ASKPASS=$0
-
-set -e			# stop on any errors
-
-function usage() {
-	echo "lastpass-ssh [-h|-d]"
-	echo "  -h or --help    print this help screen"
-	echo "  -d or --debug   enter debugging mode"
+if not `lpass --version` =~ /LastPass/ then
+	print "You don't have LastPass CLI installed. Do:\n"
+	print "brew install lpass    # on Mac\n"
+	print "apt-get install lpass # on Ubuntu\n"
 	exit 64
-}
+end
 
-for ARG in $@; do
-	case $ARG in
-	-d|--debug)
-		set -x
-		shift
-		;;
-	-h|--help|-help)
-		usage
-		shift
-		;;
-	*)
-		usage
-	;;
-	esac
-done
-
-function lp_add_all() {
-	CONTAINER="Secure Notes\SSH"
-	for KEY_ID in `lpass ls "${CONTAINER}" | grep ^Secure | tr '[]' ' ' | cut -d " " -f 5`
-	do
-		export KEY_ID
-		echo "# adding key ${KEY_ID}"
-
-		$LPASS show --notes ${KEY_ID} | ssh-add -
-	done
-}
-
-function lp_ask_pass() {
-	P=`$LPASS show --field Passphrase ${KEY_ID}`
-	echo $P </dev/null
-}
-
-if [ -z ${KEY_ID} ]; then
-	lp_add_all $0
+if ENV["KEY_ID"] then
+	r = `lpass show --field Passphrase #{ENV['KEY_ID']}`
+	print r
 else
-	lp_ask_pass
-fi
+	# Lines will be e.g.: 'Secure Notes\SSH/bitbucket [id: 5505843262]'
+	raw_lines = `lpass ls "Secure Notes\\SSH"`
+	lines = raw_lines.split("\n").select { |l| l if l =~ /^Secure/ }
+
+	# Use key's name, make path out of it, attempt to add it by its ID
+	lines.each.map{ |l| l.scan(/\w+/)}.each do |sec, notes, ssh, key_name, id_str, key_id|
+		fork do
+			ENV["KEY_ID"] = key_id
+			ENV["SSH_ASKPASS"] = fn_abs
+			ENV["DISPLAY"] = "foo"
+			exec "ssh-add #{G_KEYS_PATH}/#{key_name} < /dev/null"
+		end
+		Process.wait
+	end
+end
