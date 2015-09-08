@@ -2,13 +2,14 @@ language: ruby
 rvm:
 - 2.0.0
 
-addons:
-  apt:
-    packages:
-      - lpass
+env:
+  global:
+    LPASS=${HOME}/bin/bin/lpass
 
 script:
-- echo ss | lpass login 1qlhs3+4znburynmwnkhpe92lerwhefkhk@sharklasers.com
-- lpass ls
+- cd tests
+- ./build-lpass.sh
+- $(LPASS) ls
+- echo ss | $(LPASS) login 1qlhs3+4znburynmwnkhpe92lerwhefkhk@sharklasers.com
 
 
