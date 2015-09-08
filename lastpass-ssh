@@ -50,18 +50,15 @@ else
 			ENV["KEY_ID"] = key_id
 			ENV["SSH_ASKPASS"] = fn_abs
 			ENV["DISPLAY"] = "foo"
-			print "LastPass key ID #{key_id} "
+			print "LastPass key ID #{key_id} name #{key_name} "
 			if key_name =~ /^lpass_/ then
-				print "before\n"
 				key_body = `lpass show --notes #{key_id}`
-				print "after\n"
 				if key_body.strip().empty? then
 					print "LastPass 'Notes' section of key " +
 						"'#{key_name}' is empty (no key defined)!\n"
 					exit 1
 				end
-				print "execing\n"
-				exec "lpass show --notes #{key_id} | ssh-add - < /dev/null"
+				exec "lpass show --notes #{key_id} | ssh-add -"
 			else
 				exec "ssh-add #{g_keys_path}/#{key_name} < /dev/null"
 			end
