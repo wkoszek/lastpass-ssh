@@ -9,13 +9,30 @@
 # 1st didn't work for me out of the box on MacOSX. I made this script instead to
 # handle both adding all keys and passing the passphrase to an ssh-add.
 
-G_KEYS_PATH = "/w/c/dot.ssh/"
 fn_abs = File.absolute_path($0)
 
 if not `lpass --version` =~ /LastPass/ then
 	print "You don't have LastPass CLI installed. Do:\n"
 	print "brew install lpass    # on Mac\n"
 	print "apt-get install lpass # on Ubuntu\n"
+	exit 64
+end
+
+g_keys_path = ENV["HOME"] + "/.ssh"
+ARGV.each do |arg|
+	if arg =~ /--help/ then
+		print "lastpass-ssh:\n"
+		print "  --key-from-lastpass    get SSH \n"
+		print "  --help                 print this help\n"
+		exit 0
+	elsif arg =~ /--keys-path/ then
+		ARGV.shift
+		g_keys_path = ARGV.pop()
+	end
+	ARGV.shift
+end
+if not g_keys_path then
+	print "you must pass path to --keys-path\n"
 	exit 64
 end
 
@@ -33,7 +50,22 @@ else
 			ENV["KEY_ID"] = key_id
 			ENV["SSH_ASKPASS"] = fn_abs
 			ENV["DISPLAY"] = "foo"
-			exec "ssh-add #{G_KEYS_PATH}/#{key_name} < /dev/null"
+			print "LastPass key ID #{key_id} "
+			if key_name =~ /^lpass_/ then
+				print "before\n"
+				key_body = `lpass show --notes #{key_id}`
+				print "after\n"
+				if key_body.strip().empty? then
+					print "LastPass 'Notes' section of key " +
+						"'#{key_name}' is empty (no key defined)!\n"
+					exit 1
+				end
+				print "execing\n"
+				exec "lpass show --notes #{key_id} | ssh-add - < /dev/null"
+			else
+				exec "ssh-add #{g_keys_path}/#{key_name} < /dev/null"
+			end
+
 		end
 		Process.wait
 	end
