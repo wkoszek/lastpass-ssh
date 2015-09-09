@@ -9,7 +9,7 @@ env:
 script:
 - cd tests
 - ./build-lpass.sh
-- export PATH=$(HOME)/lpass/bin:$PATH
+- export PATH=$HOME/lpass/bin:$PATH
 - lpass ls
 - echo ss | lpass login 1qlhs3+4znburynmwnkhpe92lerwhefkhk@sharklasers.com
 
