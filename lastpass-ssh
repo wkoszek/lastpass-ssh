@@ -8,6 +8,7 @@
 #
 # 1st didn't work for me out of the box on MacOSX. I made this script instead to
 # handle both adding all keys and passing the passphrase to an ssh-add.
+require 'optparse'
 
 fn_abs = File.absolute_path($0)
 
@@ -18,19 +19,33 @@ if not `lpass --version` =~ /LastPass/ then
 	exit 64
 end
 
+g_debug = false
 g_keys_path = ENV["HOME"] + "/.ssh"
-ARGV.each do |arg|
-	if arg =~ /--help/ then
+g_keys_to_add = []
+ARGV.options do |opts|
+	opts.on("-k", "--key=[x,y,z]", Array) {
+		|a| g_keys_to_add = a
+	}
+	opts.on("-P", "--keys-path=val", String) {
+		|s| g_keys_path = s
+	}
+	opts.on("-d", "--debug") {
+		g_debug = true
+	}
+	opts.on("-h", "--help") {
 		print "lastpass-ssh:\n"
-		print "  --key-from-lastpass    get SSH \n"
+		print "  --keys-path <path>     use <path> instead of ~/.ssh"
 		print "  --help                 print this help\n"
 		exit 0
-	elsif arg =~ /--keys-path/ then
-		ARGV.shift
-		g_keys_path = ARGV.pop()
-	end
-	ARGV.shift
+	}
+	opts.parse!
 end
+
+if g_debug then
+	print "DBG: #{g_keys_to_add}\n"
+	print "DBG: #{g_keys_path}\n"
+end
+
 if not g_keys_path then
 	print "you must pass path to --keys-path\n"
 	exit 64
@@ -44,8 +59,19 @@ else
 	raw_lines = `lpass ls "Secure Notes\\SSH"`
 	lines = raw_lines.split("\n").select { |l| l if l =~ /^Secure/ }
 
+	label_printed = false
 	# Use key's name, make path out of it, attempt to add it by its ID
 	lines.each.map{ |l| l.scan(/\w+/)}.each do |sec, notes, ssh, key_name, id_str, key_id|
+		if not g_keys_to_add.empty? then
+			if not label_printed then
+				print "# Requested to add key #{g_keys_to_add}\n"
+				label_printed = true
+			end
+			if not g_keys_to_add.include?(key_name) then
+				print "Skipping #{key_name}\n"
+				next
+			end
+		end
 		fork do
 			ENV["KEY_ID"] = key_id
 			ENV["SSH_ASKPASS"] = fn_abs
