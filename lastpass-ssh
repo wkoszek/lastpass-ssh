@@ -21,7 +21,7 @@ end
 
 g_debug = false
 g_keys_path = ENV["HOME"] + "/.ssh"
-g_keys_to_add = []
+g_keys_to_add = nil
 ARGV.options do |opts|
 	opts.on("-k", "--key=[x,y,z]", Array) {
 		|a| g_keys_to_add = a
@@ -62,7 +62,7 @@ else
 	label_printed = false
 	# Use key's name, make path out of it, attempt to add it by its ID
 	lines.each.map{ |l| l.scan(/\w+/)}.each do |sec, notes, ssh, key_name, id_str, key_id|
-		if not g_keys_to_add.empty? then
+		if g_keys_to_add != nil then
 			if not label_printed then
 				print "# Requested to add key #{g_keys_to_add}\n"
 				label_printed = true
