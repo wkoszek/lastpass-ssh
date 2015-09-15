@@ -7,10 +7,11 @@ addons:
     - expect
 env:
   global:
-  - LPASS=${HOME}/bin/bin/lpass
+  - LPASS=$HOME/lpass/bin/lpass
+  - PATH=$HOME/lpass/bin:$PATH
   - secure: MJCg/jPOX6DAfBdUScaR0snoHG500BDNzZ2T9OyBK+A2FY6IGQk/iEvHYecDozphAS2dB7QwrYdfEm/VX/1wjwg0MefVVSDvc3eUtQ6gFbk3tb2CcHyXIAUQ9xRTZa7yXDWnlUG2s8mLkUtmchivVuVnS+eWlfZMlgmJiFuhlnaIYj97zNA2wJAGL1cZYvZbybvzmMRuK2XjnS1I6ZZlhc4DJkXeTRzJGIVm8YNVKpwF3NLGd5lnIAQ5nkFMqA34WanQgyiU1luTO3nTR45AN2s7yEz1w1ca+ur1miRsz7oFF1CSe+riexdk+1Arrm+4T2G1owt+W91TpOoBRnBabfOf5sjYbuGiLcigHFnrTE4mph9AVMEJWMqVaz09VcYYvh5rYPNAJAX3SKvth9B444l4CBRg5Mz0PEzFkZe8JzBBllq8DNfwN+1B+wcF8lAYGYI7ChE5jQqpb+/bpb/rGTcblf7gRsSdgIoHdFqAmn2OZexI22Yw/oAgRQxSaJgHBuP7pCoJLN6y9jJKDJjXIVeL1XzmUSr2uiJzIZbEIYHSwruhve/davbuNq6Y3XJQFoR1oq7FVTTz5LzpX0OxtN7y6eGdHTPu5FxdbpYQfjTBljNWt56E6R64ufHNUO9apyha9VNunZ+tmn52NseonTW/UCuiXkwFlreDFsuxkj8=
 script:
 - ./build-lpass.sh
-- export PATH=$HOME/lpass/bin:$PATH
 - echo $PATH
+- echo $LPASS
 - ./scripts/lpass_login
