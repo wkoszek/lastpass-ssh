@@ -1,5 +1,5 @@
 #!/usr/bin/expect
 spawn lpass login 1qlhs3+4znburynmwnkhpe92lerwhefkhk@sharklasers.com
-expect "Master Password:"
+sleep 3
 send -- "$env(LPASS_TEST_PASS)\r"
 expect eof
