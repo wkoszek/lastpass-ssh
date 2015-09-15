@@ -12,4 +12,5 @@ env:
 script:
 - ./build-lpass.sh
 - export PATH=$HOME/lpass/bin:$PATH
+- echo $PATH
 - ./scripts/lpass_login
