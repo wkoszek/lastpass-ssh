@@ -1,6 +1,10 @@
 language: ruby
 rvm:
 - 2.0.0
+addons:
+  apt:
+    packages:
+    - expect
 env:
   global:
   - LPASS=${HOME}/bin/bin/lpass
