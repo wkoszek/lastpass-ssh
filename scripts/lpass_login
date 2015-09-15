@@ -1,5 +1,5 @@
 #!/usr/bin/env expect
-spawn $env(LPASS) login 1qlhs3+4znburynmwnkhpe92lerwhefkhk@sharklasers.com
+spawn $env(LPASS) login --trust 1qlhs3+4znburynmwnkhpe92lerwhefkhk@sharklasers.com
 sleep 3
 send -- "$env(LPASS_TEST_PASS)\r"
 expect eof
