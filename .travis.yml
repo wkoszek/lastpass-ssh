@@ -10,6 +10,6 @@ script:
 - cd tests
 - ./build-lpass.sh
 - export PATH=$HOME/lpass/bin:$PATH
-- echo ss | lpass login 1qlhs3+4znburynmwnkhpe92lerwhefkhk@sharklasers.com
+- ./scripts/lpass_login
 
 
