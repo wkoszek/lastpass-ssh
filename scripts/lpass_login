@@ -1,4 +1,4 @@
-#!/usr/bin/expect
+#!/usr/bin/env expect
 spawn lpass login 1qlhs3+4znburynmwnkhpe92lerwhefkhk@sharklasers.com
 sleep 3
 send -- "$env(LPASS_TEST_PASS)\r"
