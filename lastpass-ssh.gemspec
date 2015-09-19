@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'lastpass-ssh'
-  s.version     = '1.0.1'
+  s.version     = '1.0.2'
   s.summary     = "Integrate SSH keys with LastPass"
   s.description = "lastpass-cli helps with storing SSH passphrases in LastPass"
   s.authors     = ["Wojciech A. Koszek"]
@@ -8,5 +8,6 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://github.com/wkoszek/lastpass-ssh'
   s.files       = ["bin/lastpass-ssh"]
   s.executable	= "lastpass-ssh"
+  s.require_paths = ['.']
   s.license	= 'BSD'
 end
