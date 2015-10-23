@@ -16,4 +16,4 @@ script:
 - (cd tests && ./build-lpass.sh)
 - echo $PATH
 - echo $LPASS
-- ./scripts/lpass_login
+#- ./scripts/lpass_login
