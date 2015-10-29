@@ -41,3 +41,8 @@ is the name of the key file you want to add.
 Internally the `lastpass-ssh` script is based on the `lpass` command line
 tool provided by LastPass guy themselves.
 
+
+# Author
+
+- Wojciech Adam Koszek, [wojciech@koszek.com](mailto:wojciech@koszek.com)
+- [http://www.koszek.com](http://www.koszek.com)
