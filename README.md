@@ -1,5 +1,7 @@
 # LastPass integration with SSH
 
+[![Build Status](https://travis-ci.org/wkoszek/lastpass-ssh.svg?branch=master)](https://travis-ci.org/wkoszek/lastpass-ssh)
+
 This repository has a script called `lastpass-ssh` which integrates LastPass
 with SSH. You store your SSH key passphrases in LastPass, and SSH key files
 somewhere else. To start using SSH, you type `lastpass-ssh` and it will
