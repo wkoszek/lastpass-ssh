@@ -2,17 +2,18 @@
 
 [![Build Status](https://travis-ci.org/wkoszek/lastpass-ssh.svg?branch=master)](https://travis-ci.org/wkoszek/lastpass-ssh)
 
-This repository has a script called `lastpass-ssh` which integrates LastPass
+This repository has a tool called `lastpass-ssh` which integrates LastPass
 with SSH. You store your SSH key passphrases in LastPass, and SSH key files
 somewhere else. To start using SSH, you type `lastpass-ssh` and it will
-unlock all SSH keys with appropriate passphrases.
+unlock all SSH keys with appropriate passphrases taken from LastPass.
 
 # How to install
 
-Install `lastpass-ssh` and `lpass` client:
+Install the LastPass command line client (`lpass`) from a `lastpass-cli`
+package and `lastpass-ssh` Gem:
 
-	sudo brew install lastpass-cli
-	sudo gem install lastpass-ssh
+	brew install lastpass-cli
+	gem install lastpass-ssh
 
 # Setup
 
