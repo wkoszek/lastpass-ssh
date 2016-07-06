@@ -1,4 +1,4 @@
-# LastPass integration with SSH
+# SSH key management with LastPass 
 
 [![Build Status](https://travis-ci.org/wkoszek/lastpass-ssh.svg?branch=master)](https://travis-ci.org/wkoszek/lastpass-ssh)
 
