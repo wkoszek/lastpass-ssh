@@ -7,7 +7,7 @@ with SSH. You store your SSH key passphrases in LastPass, and SSH key files
 somewhere else. To start using SSH, you type `lastpass-ssh` and it will
 unlock all SSH keys with appropriate passphrases taken from LastPass.
 
-# How to install
+## How to install
 
 Install the LastPass command line client (`lpass`) from a `lastpass-cli`
 package and `lastpass-ssh` Gem:
@@ -15,7 +15,7 @@ package and `lastpass-ssh` Gem:
 	brew install lastpass-cli
 	gem install lastpass-ssh
 
-# Setup
+## Setup
 
 You make yourself an "SSH" subfolder in the LastPass' "Secure Notes" and add
 secure notes there. Each note has a name and a passphrase. The name
@@ -25,7 +25,7 @@ key's passphrase.
 Example: if you have a key like `myrepos` in `~/.ssh/`, then the name of the
 Secure Note would be `myrepos`.
 
-# How to use
+## How to use
 
 Run:
 
@@ -39,13 +39,14 @@ You can change the location of keys by passing
 can change this behavior by passing `--key=KEYNAME` option, where `KEYNAME`
 is the name of the key file you want to add.
 
-# Details
+## Details
 
-Internally the `lastpass-ssh` script is based on the `lpass` command line
-tool provided by LastPass guy themselves.
+Internally the `lastpass-ssh` script is based on the
+[`lpass`](https://github.com/lastpass/lastpass-cli) command line tool
+provided by LastPass team themselves.
 
 
-# Author
+## Author
 
 - Wojciech Adam Koszek, [wojciech@koszek.com](mailto:wojciech@koszek.com)
 - [http://www.koszek.com](http://www.koszek.com)
