@@ -1,5 +1,5 @@
 rel:
-	gem build lastpass-ssh.gemspec
+	/bin/ls -1 *.gemspec | xargs gem build
 relpush:
 	gem push *.gem
 clean:
