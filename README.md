@@ -39,6 +39,12 @@ You can change the location of keys by passing
 can change this behavior by passing `--key=KEYNAME` option, where `KEYNAME`
 is the name of the key file you want to add.
 
+## Learn more
+
+[I wrote an
+article](https://www.koszek.com/blog/2015/12/07/using-lastpass-with-ssh/)
+on lastpass-ssh.
+
 ## Details
 
 Internally the `lastpass-ssh` script is based on the
