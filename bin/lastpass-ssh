@@ -64,7 +64,7 @@ if ENV["KEY_ID"] then
 else
 	# Lines will be e.g.: 'Secure Notes\SSH/bitbucket [id: 5505843262]'
 	raw_lines = `lpass ls "Secure Notes\\SSH"`
-	lines = raw_lines.split("\n").select { |l| l if l =~ /^Secure/ }
+	lines = raw_lines.split("\n").select { |l| l if l =~ /^Secure/ }[1..-1]
 
 	label_printed = false
 	# Use key's name, make path out of it, attempt to add it by its ID
