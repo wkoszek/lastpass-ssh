@@ -12,13 +12,7 @@ require 'optparse'
 
 fn_abs = File.absolute_path($0)
 
-lpass_exists = false
-["/usr/bin", "/usr/local/bin"].each do |dir|
-	if File.executable?("#{dir}/lpass") then
-		lpass_exists = true
-	end
-end
-
+lpass_exists = system("command -v lpass 2>&1 > /dev/null")
 if not lpass_exists then
 	print "You don't have LastPass CLI installed. Do:\n"
 	print "brew install lpass    # on Mac\n"
