@@ -61,7 +61,7 @@ else
 	lines = raw_lines.split("\n").select { |l| l if l =~ /^Secure/ }[1..-1]
 
 	# Check if we got anything from `lpass`
-	if lines.length <= 0 then
+	if lines == nil or lines.length <= 0 then
 		print "Something looks wrong. Maybe you don't have any Secure Notes yet?\n"
 		print "In that case, take a look at lastpass-ssh README file\n"
 		exit 64
