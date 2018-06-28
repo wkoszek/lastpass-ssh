@@ -13,7 +13,7 @@ env:
 script:
 - make rel
 - gem install *.gem
-- (cd tests && ./build-lpass.sh)
+#- (cd tests && ./build-lpass.sh)
 - echo $PATH
 - echo $LPASS
 #- ./scripts/lpass_login
