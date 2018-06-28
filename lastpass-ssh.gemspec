@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'lastpass-ssh'
-  s.version     = '1.0.4'
+  s.version     = '1.0.5'
   s.summary     = "Use LastPass for SSH key passphrases"
   s.description = "The #{s.name} lets you remember SSH passphrases in LastPass"
   s.authors     = ["Wojciech Adam Koszek"]

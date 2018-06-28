@@ -60,6 +60,13 @@ else
 	raw_lines = `lpass ls "Secure Notes\\SSH"`
 	lines = raw_lines.split("\n").select { |l| l if l =~ /^Secure/ }[1..-1]
 
+	# Check if we got anything from `lpass`
+	if lines.length <= 0 then
+		print "Something looks wrong. Maybe you don't have any Secure Notes yet?\n"
+		print "In that case, take a look at lastpass-ssh README file\n"
+		exit 64
+	end
+
 	label_printed = false
 	# Use key's name, make path out of it, attempt to add it by its ID
 	lines.each.map{ |l| l.scan(/\w+/)}.each do |sec, notes, ssh, key_name, id_str, key_id|
